@@ -8,21 +8,37 @@ import {
   MenuItem,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import { userRegister } from "../../services/actions/userRegister";
+import { agentRegister } from "../../services/actions/agentRegister";
+import { toast } from "sonner";
 
 const Register = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = async (data: any) => {
+    const userRegisterData = { user: data };
+    const agentRegisterData = { agent: data };
+    console.log(agentRegisterData);
     try {
-      const response = await axios.post("/api/register", data);
-      console.log("Registration Success:", response.data);
+      let res;
+      if (data.role === "user") {
+        res = await userRegister(userRegisterData);
+      } else if (data.role === "agent") {
+        res = await agentRegister(agentRegisterData);
+      }
+
+      if (res?.data?._id) {
+        toast.success(res?.message || "Registration successful!");
+        reset();
+      }
     } catch (error) {
       console.error("Registration Failed:", error);
+      toast.error("Registration failed. Please try again.");
     }
   };
 
@@ -68,6 +84,7 @@ const Register = () => {
               {...register("pin", {
                 required: "PIN is required",
                 minLength: { value: 5, message: "PIN must be 5 digits" },
+                maxLength: { value: 5, message: "PIN must be 5 digits" },
               })}
               error={!!errors.pin}
               helperText={errors.pin?.message as string}
@@ -76,9 +93,15 @@ const Register = () => {
               label="Mobile Number"
               fullWidth
               margin="normal"
-              {...register("mobile", { required: "Mobile Number is required" })}
-              error={!!errors.mobile}
-              helperText={errors.mobile?.message as string}
+              {...register("mobileNumber", {
+                required: "Mobile Number is required",
+                pattern: {
+                  value: /^\d{11}$/,
+                  message: "Mobile number must be exactly 11 digits",
+                },
+              })}
+              error={!!errors.mobileNumber}
+              helperText={errors.mobileNumber?.message as string}
             />
             <TextField
               label="Email"
@@ -94,14 +117,14 @@ const Register = () => {
               label="Account Type"
               fullWidth
               margin="normal"
-              {...register("accountType", {
+              {...register("role", {
                 required: "Account Type is required",
               })}
-              error={!!errors.accountType}
-              helperText={errors.accountType?.message as string}
+              error={!!errors.role}
+              helperText={errors.role?.message as string}
             >
-              <MenuItem value="Agent">Agent</MenuItem>
-              <MenuItem value="User">User</MenuItem>
+              <MenuItem value="agent">Agent</MenuItem>
+              <MenuItem value="user">User</MenuItem>
             </TextField>
             <TextField
               label="NID"
