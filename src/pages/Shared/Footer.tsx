@@ -1,9 +1,8 @@
-import React from "react";
 import { Container, Typography, Box, Link } from "@mui/material";
 
 const Footer = () => {
   return (
-    <Box sx={{ bgcolor: "primary.main", color: "white", py: 3, mt: 5 }}>
+    <Box sx={{ bgcolor: "#E2136E", color: "white", py: 3, mt: 5 }}>
       <Container maxWidth="lg">
         <Box
           sx={{

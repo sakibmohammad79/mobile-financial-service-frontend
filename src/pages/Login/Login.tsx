@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Link,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 import { useForm } from "react-hook-form";
 import { login } from "../../services/actions/login";
@@ -79,13 +86,20 @@ const Login = () => {
             <Button
               type="submit"
               variant="contained"
-              color="primary"
               fullWidth
-              sx={{ mt: 2 }}
+              sx={{ mt: 2, background: "#E2136E" }}
             >
               Login
             </Button>
           </form>
+          <Box mt={2}>
+            <Typography>
+              New to financial service? Please{" "}
+              <Link component={Link} href="/register">
+                Register
+              </Link>
+            </Typography>
+          </Box>
         </Box>
       </Container>
     </Box>

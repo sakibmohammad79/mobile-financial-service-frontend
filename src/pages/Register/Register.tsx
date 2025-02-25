@@ -6,6 +6,7 @@ import {
   Typography,
   Box,
   MenuItem,
+  Link,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { userRegister } from "../../services/actions/userRegister";
@@ -142,11 +143,19 @@ const Register = () => {
               variant="contained"
               color="primary"
               fullWidth
-              sx={{ mt: 2 }}
+              sx={{ mt: 2, background: "#E2136E" }}
             >
               Register
             </Button>
           </form>
+          <Box mt={2}>
+            <Typography>
+              Already have an account? Please{" "}
+              <Link component={Link} href="/login">
+                login
+              </Link>
+            </Typography>
+          </Box>
         </Box>
       </Container>
     </Box>
