@@ -11,8 +11,10 @@ import { useForm } from "react-hook-form";
 import { userRegister } from "../../services/actions/userRegister";
 import { agentRegister } from "../../services/actions/agentRegister";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -35,6 +37,7 @@ const Register = () => {
       if (res?.data?._id) {
         toast.success(res?.message || "Registration successful!");
         reset();
+        navigate("/login");
       }
     } catch (error) {
       console.error("Registration Failed:", error);

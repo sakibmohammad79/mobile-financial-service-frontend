@@ -1,19 +1,31 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
-import axios from "axios";
+
 import { useForm } from "react-hook-form";
+import { login } from "../../services/actions/login";
+import { storeUserInfo } from "../../services/authService";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
-
   const onSubmit = async (data: any) => {
+    console.log(data);
     try {
-      const response = await axios.post("/api/login", data);
-      console.log("Login Success:", response.data);
+      const res = await login(data);
+      if (res?.data?.user?._id) {
+        storeUserInfo(res?.data?.token);
+        toast.success(res?.message);
+        reset();
+        navigate("/");
+      }
+      console.log(res);
     } catch (error) {
       console.error("Login Failed:", error);
     }
