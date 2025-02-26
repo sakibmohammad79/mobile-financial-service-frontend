@@ -12,35 +12,54 @@ import {
 } from "@mui/material";
 import { useCashInMutation } from "../../../redux/api/transactionApi";
 import { useGetAllUserQuery } from "../../../redux/api/userApi";
+import { getuserInfo } from "../../../services/authService";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const CashInService = () => {
-  const { handleSubmit, control, reset } = useForm({
+  const navigate = useNavigate();
+  const { id } = getuserInfo();
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
-      userPhone: "",
+      userId: "",
       amount: "",
       pin: "",
     },
   });
 
-  const [cashIn] = useCashInMutation();
-  const { data, isLoading } = useGetAllUserQuery({});
+  const [cashIn, { isLoading: isSubmitting }] = useCashInMutation();
+  const { data: usersData, isLoading: isUserLoading } = useGetAllUserQuery({});
 
   const onSubmit = async (formData: any) => {
+    console.log(formData);
     try {
-      await cashIn(formData);
-      reset(); // Reset form after success
+      const response = await cashIn({
+        userId: formData.userId,
+        agentId: id,
+        amount: Number(formData.amount),
+        pin: formData.pin,
+      });
+      console.log(response);
+      if (response?.data?._id) {
+        toast.success("Cash-IN successfully!");
+        reset();
+        navigate("/agent");
+      } else {
+        toast.error("Cash-In failed! check balance & pin!");
+      }
     } catch (err: any) {
       console.error(err);
+      alert("An error occurred!");
     }
   };
 
   return (
-    <Container
-      maxWidth="sm"
-      sx={{
-        height: "100vh",
-      }}
-    >
+    <Container maxWidth="sm" sx={{ height: "100vh" }}>
       <Card sx={{ mt: 4, p: 2, boxShadow: 3, borderRadius: 2 }}>
         <CardContent>
           <Typography variant="h5" textAlign="center" mb={2}>
@@ -50,19 +69,18 @@ const CashInService = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* Mobile Number Dropdown */}
             <Controller
-              name="userPhone"
+              name="userId"
               control={control}
+              rules={{ required: "User selection is required" }}
               render={({ field }) => (
                 <Autocomplete
-                  options={data || []}
+                  options={usersData || []}
                   getOptionLabel={(option: any) =>
-                    `${option.name} ${option.mobileNumber}`
+                    `${option.name} (${option.mobileNumber})`
                   }
-                  isOptionEqualToValue={(option, value) =>
-                    option.mobileNumber === value
-                  }
+                  isOptionEqualToValue={(option, value) => option._id === value}
                   onChange={(_, newValue) =>
-                    field.onChange(newValue ? newValue.mobileNumber : "")
+                    field.onChange(newValue ? newValue._id : "")
                   }
                   renderInput={(params) => (
                     <TextField
@@ -70,11 +88,15 @@ const CashInService = () => {
                       label="Select User"
                       margin="normal"
                       fullWidth
+                      error={!!errors.userId}
+                      helperText={errors.userId?.message}
                       InputProps={{
                         ...params.InputProps,
                         endAdornment: (
                           <>
-                            {isLoading ? <CircularProgress size={20} /> : null}
+                            {isUserLoading ? (
+                              <CircularProgress size={20} />
+                            ) : null}
                             {params.InputProps.endAdornment}
                           </>
                         ),
@@ -89,6 +111,10 @@ const CashInService = () => {
             <Controller
               name="amount"
               control={control}
+              rules={{
+                required: "Amount is required",
+                min: { value: 1, message: "Amount must be greater than 0" },
+              }}
               render={({ field }) => (
                 <TextField
                   {...field}
@@ -96,6 +122,8 @@ const CashInService = () => {
                   type="number"
                   fullWidth
                   margin="normal"
+                  error={!!errors.amount}
+                  helperText={errors.amount?.message}
                 />
               )}
             />
@@ -104,6 +132,7 @@ const CashInService = () => {
             <Controller
               name="pin"
               control={control}
+              rules={{ required: "PIN is required" }}
               render={({ field }) => (
                 <TextField
                   {...field}
@@ -111,6 +140,8 @@ const CashInService = () => {
                   type="password"
                   fullWidth
                   margin="normal"
+                  error={!!errors.pin}
+                  helperText={errors.pin?.message}
                 />
               )}
             />
@@ -122,8 +153,13 @@ const CashInService = () => {
               color="primary"
               fullWidth
               sx={{ mt: 2 }}
+              disabled={isSubmitting}
             >
-              Confirm Cash-In
+              {isSubmitting ? (
+                <CircularProgress size={20} />
+              ) : (
+                "Confirm Cash-In"
+              )}
             </Button>
           </form>
         </CardContent>
