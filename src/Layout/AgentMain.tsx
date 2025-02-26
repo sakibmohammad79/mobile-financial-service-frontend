@@ -4,7 +4,8 @@ import Footer from "../pages/Shared/Footer";
 import { getuserInfo } from "../services/authService";
 
 const AgentMain = () => {
-  const { role } = getuserInfo();
+  const user = getuserInfo();
+  const role = user?.role;
 
   if (role !== "agent") {
     return <Navigate to="/login" replace />;
