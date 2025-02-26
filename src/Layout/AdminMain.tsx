@@ -1,14 +1,24 @@
-import { Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Navigate, Outlet } from "react-router-dom";
 import Navbar from "../pages/Shared/Navbar";
 import Footer from "../pages/Shared/Footer";
+import { getuserInfo } from "../services/authService";
 
 const AdminMain = () => {
-  // const user = getuserInfo();
-  // const role = user?.role;
+  const [role, setRole] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // if (role !== "admin") {
-  //   return <Navigate to="/login" replace />;
-  // }
+  useEffect(() => {
+    const user = getuserInfo();
+    setRole(user?.role || null);
+    setLoading(false);
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+
+  if (role !== "admin") {
+    return <Navigate to="/login" replace />;
+  }
 
   return (
     <div>
