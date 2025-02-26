@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import Navbar from "../pages/Shared/Navbar";
 import Footer from "../pages/Shared/Footer";
 
-const Main = () => {
+const AgentMain = () => {
   // const [role, setUserRole] = useState("");
   // const navigate = useNavigate();
   // console.log(role);
@@ -28,4 +28,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default AgentMain;

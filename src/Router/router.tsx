@@ -3,12 +3,18 @@ import Home from "../pages/Home/Home/Home";
 import Main from "../Layout/Main";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
-import AgentMain from "../Layout/Main";
+
 import Agent from "../pages/Agent/Agent/Agent";
 import CashInService from "../pages/Agent/CashInService/CashInService";
 import BalanceRequest from "../pages/Agent/BalanceRequest/BalanceRequest";
 import SendMoney from "../pages/Home/UserService/SendMoney/SendMoney";
 import CashOut from "../pages/Home/UserService/CashOut/CashOut";
+import AgentMain from "../Layout/AgentMain";
+import AdminMain from "../Layout/AdminMain";
+import Admin from "../pages/Admin/Admin/Admin";
+import ManageUser from "../pages/Admin/AdminService/UserManagement/UserManagement";
+import ManageAgent from "../pages/Admin/AdminService/AgentManagement/AgentManagement";
+import RechargeRequest from "../pages/Admin/AdminService/RechargeRequest/RechargeRequest";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +58,28 @@ export const router = createBrowserRouter([
       {
         path: "/agent/balance-request",
         element: <BalanceRequest />,
+      },
+    ],
+  },
+  {
+    path: "/",
+    element: <AdminMain />,
+    children: [
+      {
+        path: "/admin",
+        element: <Admin />,
+      },
+      {
+        path: "/admin/manage-user",
+        element: <ManageUser />,
+      },
+      {
+        path: "/admin/manage-agent",
+        element: <ManageAgent />,
+      },
+      {
+        path: "/admin/recharge-request",
+        element: <RechargeRequest />,
       },
     ],
   },

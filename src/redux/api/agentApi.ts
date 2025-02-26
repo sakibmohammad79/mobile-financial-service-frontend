@@ -25,6 +25,13 @@ const agentApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.agent],
     }),
+    agentBlocked: build.mutation({
+      query: (id) => ({
+        url: `/agent/blocked/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: [tagTypes.agent],
+    }),
   }),
 });
 
@@ -32,4 +39,5 @@ export const {
   useGetSingleAgentQuery,
   useSendBalanceRequestMutation,
   useGetAllAgentQuery,
+  useAgentBlockedMutation,
 } = agentApi;

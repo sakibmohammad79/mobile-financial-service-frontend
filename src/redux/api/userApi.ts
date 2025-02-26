@@ -17,7 +17,18 @@ const userApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.user],
     }),
+    userBlocked: build.mutation({
+      query: (id) => ({
+        url: `/user/blocked/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: [tagTypes.user],
+    }),
   }),
 });
 
-export const { useGetSingleUserQuery, useGetAllUserQuery } = userApi;
+export const {
+  useGetSingleUserQuery,
+  useGetAllUserQuery,
+  useUserBlockedMutation,
+} = userApi;

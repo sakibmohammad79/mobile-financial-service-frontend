@@ -1,5 +1,5 @@
-import { Outlet, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { Outlet } from "react-router-dom";
+
 import Navbar from "../pages/Shared/Navbar";
 import Footer from "../pages/Shared/Footer";
 // import { getuserInfo } from "../services/authService";
@@ -7,7 +7,7 @@ import Footer from "../pages/Shared/Footer";
 //   role: "user" | "agent" | "admin";
 // }
 
-const AgentMain = () => {
+const UserMain = () => {
   // const navigate = useNavigate();
   // const userInfo: UserInfo | null = getuserInfo();
 
@@ -37,4 +37,4 @@ const AgentMain = () => {
   );
 };
 
-export default AgentMain;
+export default UserMain;

@@ -15,11 +15,11 @@ import {
   CircularProgress,
   Box,
 } from "@mui/material";
-import { useGetUserTransactionQuery } from "../../../redux/api/transactionApi";
+import { useGetAgentTransactionQuery } from "../../../redux/api/transactionApi";
 import { useEffect, useState } from "react";
 import { getuserInfo } from "../../../services/authService";
 
-const UserTransaction = () => {
+const AgentTransaction = () => {
   const [userId, setUserId] = useState("");
   const [visibleCount, setVisibleCount] = useState(5); // Initially show 5 transactions
 
@@ -30,7 +30,7 @@ const UserTransaction = () => {
     }
   }, []);
 
-  const { data: transactions, isLoading } = useGetUserTransactionQuery(userId);
+  const { data: transactions, isLoading } = useGetAgentTransactionQuery(userId);
 
   // Handle loading state
   if (isLoading) {
@@ -84,7 +84,6 @@ const UserTransaction = () => {
                           <TableCell sx={{ fontWeight: "bold" }}>
                             {tx?.amount}
                           </TableCell>
-
                           <TableCell>{tx?.fee}</TableCell>
                           <TableCell>{tx?._id}</TableCell>
                         </TableRow>
@@ -111,4 +110,4 @@ const UserTransaction = () => {
   );
 };
 
-export default UserTransaction;
+export default AgentTransaction;

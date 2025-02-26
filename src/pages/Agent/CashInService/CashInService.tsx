@@ -50,7 +50,7 @@ const CashInService = () => {
         reset();
         navigate("/agent");
       } else {
-        toast.error("Cash-In failed! check balance & pin!");
+        toast.error("Cash-In failed! Check balance & PIN!");
       }
     } catch (err: any) {
       console.error(err);
@@ -59,8 +59,24 @@ const CashInService = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ height: "100vh" }}>
-      <Card sx={{ mt: 4, p: 2, boxShadow: 3, borderRadius: 2 }}>
+    <Container
+      maxWidth="sm"
+      sx={{
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Card
+        sx={{
+          width: "100%",
+          maxWidth: 500,
+          p: 3,
+          boxShadow: 3,
+          borderRadius: 2,
+        }}
+      >
         <CardContent>
           <Typography variant="h5" textAlign="center" mb={2}>
             Cash-In Service

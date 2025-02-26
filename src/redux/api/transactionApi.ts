@@ -10,6 +10,13 @@ const transactionApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.transaction],
     }),
+    getAgentTransaction: build.query({
+      query: (id) => ({
+        url: `/transition/agent/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.transaction],
+    }),
     cashIn: build.mutation({
       query: (data) => ({
         url: "/transition/cash-in",
@@ -45,4 +52,5 @@ export const {
   useCashInMutation,
   useSendMoneyMutation,
   useCashOutMutation,
+  useGetAgentTransactionQuery,
 } = transactionApi;

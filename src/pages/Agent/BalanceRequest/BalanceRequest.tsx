@@ -13,8 +13,10 @@ import { Send } from "@mui/icons-material";
 import { useSendBalanceRequestMutation } from "../../../redux/api/agentApi";
 import { toast } from "sonner";
 import { getuserInfo } from "../../../services/authService";
+import { useNavigate } from "react-router-dom";
 
 const BalanceRequest = () => {
+  const navigate = useNavigate();
   const userInfo = getuserInfo();
   const { handleSubmit, control, reset } = useForm({
     defaultValues: {
@@ -26,12 +28,17 @@ const BalanceRequest = () => {
 
   const onSubmit = async (formData: any) => {
     try {
-      await sendBalanceRequest({
+      const res = await sendBalanceRequest({
         agentId: userInfo?.id,
         amount: Number(formData.amount),
       });
-      toast.success("Balance request sent successfully!");
-      reset(); // Reset form after success
+      if (res?.data?._id) {
+        toast.success("Recharge request sned successfully!");
+        reset();
+        navigate("/agent");
+      } else {
+        toast.error("Recharge request send failed!");
+      }
     } catch (err: any) {
       console.error(err);
       alert("Failed to send balance request.");
