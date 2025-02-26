@@ -2,7 +2,7 @@ import { FieldValues } from "react-hook-form";
 
 export const agentRegister = async (formData: FieldValues) => {
   const res = await fetch(
-    `${import.meta.env.VITE_BACKEND_API_URL}/agent/create-agent`,
+    `${import.meta.env.VITE_BACKEND_API_URL}/api/v1/agent/create-agent`,
     {
       method: "POST",
       headers: {

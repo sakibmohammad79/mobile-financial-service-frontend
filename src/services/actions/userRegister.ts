@@ -2,7 +2,7 @@ import { FieldValues } from "react-hook-form";
 
 export const userRegister = async (formData: FieldValues) => {
   const res = await fetch(
-    `${import.meta.env.VITE_BACKEND_API_URL}/user/create-user`,
+    `${import.meta.env.VITE_BACKEND_API_URL}/api/v1/user/create-user`,
     {
       method: "POST",
       headers: {
