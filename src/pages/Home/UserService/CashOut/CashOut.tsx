@@ -17,10 +17,18 @@ import { Payment } from "@mui/icons-material";
 import { useCashOutMutation } from "../../../../redux/api/transactionApi";
 import { useGetAllAgentQuery } from "../../../../redux/api/agentApi";
 import { getuserInfo } from "../../../../services/authService";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const CashOut = () => {
+  const navigate = useNavigate();
   const { id } = getuserInfo();
-  const { handleSubmit, control, reset } = useForm({
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       agentId: "",
       amount: "",
@@ -38,14 +46,20 @@ const CashOut = () => {
 
   const onSubmit = async (formData: any) => {
     try {
-      await cashOut({
+      const res = await cashOut({
         userId: id,
         agentId: formData.agentId,
         amount: Number(formData.amount),
         pin: formData.pin,
       });
-      alert("Cash out successful!");
-      reset(); // Reset form after success
+
+      if (res?.data?._id) {
+        toast.success("Cash out successfully!");
+        reset();
+        navigate("/");
+      } else {
+        toast.error("Cash out failed! check balance & pin!");
+      }
     } catch (err: any) {
       console.error(err);
       alert("Cash out failed!");
@@ -53,8 +67,16 @@ const CashOut = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ height: "100vh" }}>
-      <Card sx={{ mt: 4, p: 2, boxShadow: 3, borderRadius: 2 }}>
+    <Container
+      maxWidth="sm"
+      sx={{
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Card sx={{ width: "100%", p: 2, boxShadow: 3, borderRadius: 2 }}>
         <CardContent>
           <Typography variant="h5" textAlign="center" mb={2}>
             Cash Out
@@ -62,24 +84,23 @@ const CashOut = () => {
 
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* Agent Dropdown */}
+
             <FormControl fullWidth margin="normal">
-              <InputLabel>Select Agent</InputLabel>
+              <InputLabel>Receiver Phone</InputLabel>
               <Controller
                 name="agentId"
                 control={control}
-                rules={{ required: "Agent selection is required" }}
+                rules={{ required: "Receiver phone number is required" }}
                 render={({ field }) => (
-                  <Select {...field} label="Select Agent">
+                  <Select {...field} label="Receiver Phone">
                     {isAgentLoading ? (
-                      <MenuItem disabled>Loading agents...</MenuItem>
-                    ) : verifiedAgents?.length > 0 ? (
-                      verifiedAgents.map((agent: any) => (
-                        <MenuItem key={agent.id} value={agent.id}>
-                          {agent.name}
+                      <MenuItem disabled>Loading users...</MenuItem>
+                    ) : (
+                      verifiedAgents?.map((agent: any) => (
+                        <MenuItem key={agent._id} value={agent._id}>
+                          {agent.name} ({agent.mobileNumber})
                         </MenuItem>
                       ))
-                    ) : (
-                      <MenuItem disabled>No verified agents available</MenuItem>
                     )}
                   </Select>
                 )}
@@ -91,15 +112,15 @@ const CashOut = () => {
               name="amount"
               control={control}
               rules={{ required: "Amount is required", min: 1 }}
-              render={({ field, fieldState }) => (
+              render={({ field }) => (
                 <TextField
                   {...field}
                   label="Amount"
                   type="number"
                   fullWidth
                   margin="normal"
-                  error={!!fieldState.error}
-                  helperText={fieldState.error?.message}
+                  error={!!errors.amount}
+                  helperText={errors.amount?.message}
                 />
               )}
             />
@@ -109,15 +130,15 @@ const CashOut = () => {
               name="pin"
               control={control}
               rules={{ required: "Transaction PIN is required" }}
-              render={({ field, fieldState }) => (
+              render={({ field }) => (
                 <TextField
                   {...field}
                   label="PIN"
                   type="password"
                   fullWidth
                   margin="normal"
-                  error={!!fieldState.error}
-                  helperText={fieldState.error?.message}
+                  error={!!errors.pin}
+                  helperText={errors.pin?.message}
                 />
               )}
             />
