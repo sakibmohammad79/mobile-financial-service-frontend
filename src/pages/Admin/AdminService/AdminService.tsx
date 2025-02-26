@@ -12,8 +12,6 @@ import {
   VerifiedUser,
   MonetizationOn,
   AccountBalanceWallet,
-  Payment,
-  Notifications,
 } from "@mui/icons-material";
 
 const AdminService = () => {
@@ -100,70 +98,24 @@ const AdminService = () => {
           </Card>
         </Grid>
 
-        {/* Cash In Requests */}
+        {/* add money to the agent's account. */}
         <Grid item xs={12} sm={4}>
           <Card sx={{ borderRadius: 3, boxShadow: 3, textAlign: "center" }}>
             <CardContent>
               <AccountBalanceWallet sx={{ fontSize: 40, color: "#4caf50" }} />
               <Typography variant="h6" mt={1} fontWeight="bold">
-                Cash In Requests
+                Add Money
               </Typography>
               <Typography variant="body2" color="textSecondary" mb={2}>
-                Approve or reject cash in requests.
+                Add money to the agent's account.
               </Typography>
               <Button
                 component={Link}
-                href="/admin/cash-in"
+                href="/admin/add-money"
                 variant="contained"
                 fullWidth
               >
-                Manage Cash In
-              </Button>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* Withdrawal Requests */}
-        <Grid item xs={12} sm={4}>
-          <Card sx={{ borderRadius: 3, boxShadow: 3, textAlign: "center" }}>
-            <CardContent>
-              <Payment sx={{ fontSize: 40, color: "#d32f2f" }} />
-              <Typography variant="h6" mt={1} fontWeight="bold">
-                Withdrawal Requests
-              </Typography>
-              <Typography variant="body2" color="textSecondary" mb={2}>
-                Approve or reject agent withdrawals.
-              </Typography>
-              <Button
-                component={Link}
-                href="/admin/withdrawals"
-                variant="contained"
-                fullWidth
-              >
-                Manage Withdrawals
-              </Button>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* Notifications & Logs */}
-        <Grid item xs={12} sm={4}>
-          <Card sx={{ borderRadius: 3, boxShadow: 3, textAlign: "center" }}>
-            <CardContent>
-              <Notifications sx={{ fontSize: 40, color: "#ff5722" }} />
-              <Typography variant="h6" mt={1} fontWeight="bold">
-                Notifications & Logs
-              </Typography>
-              <Typography variant="body2" color="textSecondary" mb={2}>
-                View system notifications and logs.
-              </Typography>
-              <Button
-                component={Link}
-                href="/admin/logs"
-                variant="contained"
-                fullWidth
-              >
-                View Logs
+                Confirm Add Money
               </Button>
             </CardContent>
           </Card>

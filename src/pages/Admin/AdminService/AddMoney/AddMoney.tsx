@@ -14,13 +14,14 @@ import {
   InputLabel,
 } from "@mui/material";
 import { Payment } from "@mui/icons-material";
-import { useCashOutMutation } from "../../../../redux/api/transactionApi";
-import { useGetAllAgentQuery } from "../../../../redux/api/agentApi";
+
 import { getuserInfo } from "../../../../services/authService";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { useGetAllAgentQuery } from "../../../../redux/api/agentApi";
+import { useAddMoneyMutation } from "../../../../redux/api/transactionApi";
 
-const CashOut = () => {
+const AddMoneyToAgent = () => {
   const navigate = useNavigate();
   const { id } = getuserInfo();
   const {
@@ -36,7 +37,7 @@ const CashOut = () => {
     },
   });
 
-  const [cashOut, { isLoading }] = useCashOutMutation();
+  const [cashOut, { isLoading }] = useAddMoneyMutation();
   const { data: agentsData, isLoading: isAgentLoading } = useGetAllAgentQuery(
     {}
   );
@@ -47,18 +48,17 @@ const CashOut = () => {
   const onSubmit = async (formData: any) => {
     try {
       const res = await cashOut({
-        userId: id,
         agentId: formData.agentId,
+        adminId: id,
         amount: Number(formData.amount),
-        pin: formData.pin,
       });
 
       if (res?.data?._id) {
-        toast.success("Cash out successfully!");
+        toast.success("Add money to agent successfully!");
         reset();
-        navigate("/");
+        navigate("/admin");
       } else {
-        toast.error("Cash out failed! check balance & pin!");
+        toast.error("Add money failed! check balance!");
       }
     } catch (err: any) {
       console.error(err);
@@ -79,7 +79,7 @@ const CashOut = () => {
       <Card sx={{ width: "100%", p: 2, boxShadow: 3, borderRadius: 2 }}>
         <CardContent>
           <Typography variant="h5" textAlign="center" mb={2}>
-            Cash Out
+            add money
           </Typography>
 
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -125,24 +125,6 @@ const CashOut = () => {
               )}
             />
 
-            {/* Pin Field */}
-            <Controller
-              name="pin"
-              control={control}
-              rules={{ required: "Transaction PIN is required" }}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="PIN"
-                  type="password"
-                  fullWidth
-                  margin="normal"
-                  error={!!errors.pin}
-                  helperText={errors.pin?.message}
-                />
-              )}
-            />
-
             {/* Submit Button */}
             <Button
               type="submit"
@@ -155,7 +137,7 @@ const CashOut = () => {
               }
               disabled={isLoading}
             >
-              {isLoading ? "Processing..." : "Cash Out"}
+              {isLoading ? "Processing..." : "Add Money"}
             </Button>
           </form>
         </CardContent>
@@ -164,4 +146,4 @@ const CashOut = () => {
   );
 };
 
-export default CashOut;
+export default AddMoneyToAgent;

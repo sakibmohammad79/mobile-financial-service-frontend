@@ -15,6 +15,7 @@ import Admin from "../pages/Admin/Admin/Admin";
 import ManageUser from "../pages/Admin/AdminService/UserManagement/UserManagement";
 import ManageAgent from "../pages/Admin/AdminService/AgentManagement/AgentManagement";
 import RechargeRequest from "../pages/Admin/AdminService/RechargeRequest/RechargeRequest";
+import AddMoneyToAgent from "../pages/Admin/AdminService/AddMoney/AddMoney";
 
 export const router = createBrowserRouter([
   {
@@ -80,6 +81,10 @@ export const router = createBrowserRouter([
       {
         path: "/admin/recharge-request",
         element: <RechargeRequest />,
+      },
+      {
+        path: "/admin/add-money",
+        element: <AddMoneyToAgent />,
       },
     ],
   },
