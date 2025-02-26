@@ -5,7 +5,6 @@ import {
   Grid,
   Typography,
   Button,
-  Box,
   Link,
 } from "@mui/material";
 import { Send, AccountBalanceWallet } from "@mui/icons-material";
@@ -26,7 +25,7 @@ const AgenService = () => {
       <Grid container spacing={3} justifyContent="center">
         {/* Cash In */}
 
-        <Grid item xs={12} sm={4} component={Link} href="/agent/cashin">
+        <Grid item xs={12} sm={4}>
           <Card sx={{ borderRadius: 3, boxShadow: 3, textAlign: "center" }}>
             <CardContent>
               <AccountBalanceWallet sx={{ fontSize: 40, color: "#2e7d32" }} />
@@ -36,7 +35,13 @@ const AgenService = () => {
               <Typography variant="body2" color="textSecondary" mb={2}>
                 Cash in to user account easily.
               </Typography>
-              <Button variant="contained" color="success" fullWidth>
+              <Button
+                component={Link}
+                href="/agent/cashin"
+                variant="contained"
+                color="success"
+                fullWidth
+              >
                 Cash In
               </Button>
             </CardContent>
@@ -54,7 +59,12 @@ const AgenService = () => {
               <Typography variant="body2" color="textSecondary" mb={2}>
                 Send balance request to admin
               </Typography>
-              <Button variant="contained" fullWidth>
+              <Button
+                component={Link}
+                href="/agent/balance-request"
+                variant="contained"
+                fullWidth
+              >
                 Balance Request
               </Button>
             </CardContent>

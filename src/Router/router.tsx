@@ -6,6 +6,9 @@ import Register from "../pages/Register/Register";
 import AgentMain from "../Layout/Main";
 import Agent from "../pages/Agent/Agent/Agent";
 import CashInService from "../pages/Agent/CashInService/CashInService";
+import BalanceRequest from "../pages/Agent/BalanceRequest/BalanceRequest";
+import SendMoney from "../pages/Home/UserService/SendMoney/SendMoney";
+import CashOut from "../pages/Home/UserService/CashOut/CashOut";
 
 export const router = createBrowserRouter([
   {
@@ -15,6 +18,14 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/send-money",
+        element: <SendMoney />,
+      },
+      {
+        path: "/cash-out",
+        element: <CashOut />,
       },
       {
         path: "login",
@@ -37,6 +48,10 @@ export const router = createBrowserRouter([
       {
         path: "/agent/cashin",
         element: <CashInService />,
+      },
+      {
+        path: "/agent/balance-request",
+        element: <BalanceRequest />,
       },
     ],
   },

@@ -39,6 +39,8 @@ const Register = () => {
         toast.success(res?.message || "Registration successful!");
         reset();
         navigate("/login");
+      } else {
+        toast.error("Registration failed. Please try again.");
       }
     } catch (error) {
       console.error("Registration Failed:", error);
@@ -131,10 +133,16 @@ const Register = () => {
               <MenuItem value="user">User</MenuItem>
             </TextField>
             <TextField
-              label="NID"
+              label="10 Digit NID"
               fullWidth
               margin="normal"
-              {...register("nid", { required: "NID is required" })}
+              {...register("nid", {
+                required: "NID is required",
+                pattern: {
+                  value: /^\d{10}$/,
+                  message: "NID must be exactly 10 digits",
+                },
+              })}
               error={!!errors.nid}
               helperText={errors.nid?.message as string}
             />

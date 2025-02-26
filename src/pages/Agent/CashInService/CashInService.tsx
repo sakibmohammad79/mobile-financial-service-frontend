@@ -55,7 +55,9 @@ const CashInService = () => {
               render={({ field }) => (
                 <Autocomplete
                   options={data || []}
-                  getOptionLabel={(option: any) => option.name}
+                  getOptionLabel={(option: any) =>
+                    `${option.name} ${option.mobileNumber}`
+                  }
                   isOptionEqualToValue={(option, value) =>
                     option.mobileNumber === value
                   }

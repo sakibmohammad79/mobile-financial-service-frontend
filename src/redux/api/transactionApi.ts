@@ -19,7 +19,30 @@ const transactionApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.transaction],
     }),
+    sendMoney: build.mutation({
+      query: (data) => ({
+        url: "/transition/send-money",
+        method: "POST",
+        contentType: "application/json",
+        data,
+      }),
+      invalidatesTags: [tagTypes.transaction],
+    }),
+    cashOut: build.mutation({
+      query: (data) => ({
+        url: "/transition/cash-out",
+        method: "POST",
+        contentType: "application/json",
+        data,
+      }),
+      invalidatesTags: [tagTypes.transaction],
+    }),
   }),
 });
 
-export const { useGetUserTransactionQuery, useCashInMutation } = transactionApi;
+export const {
+  useGetUserTransactionQuery,
+  useCashInMutation,
+  useSendMoneyMutation,
+  useCashOutMutation,
+} = transactionApi;

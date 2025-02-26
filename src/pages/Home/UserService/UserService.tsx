@@ -5,6 +5,7 @@ import {
   Grid,
   Typography,
   Button,
+  Link,
 } from "@mui/material";
 import { Send, MoneyOff } from "@mui/icons-material";
 
@@ -33,7 +34,12 @@ const UserService = () => {
               <Typography variant="body2" color="textSecondary" mb={2}>
                 Instantly transfer money to anyone.
               </Typography>
-              <Button variant="contained" fullWidth>
+              <Button
+                component={Link}
+                href="/send-money"
+                variant="contained"
+                fullWidth
+              >
                 Send Money
               </Button>
             </CardContent>
@@ -51,7 +57,13 @@ const UserService = () => {
               <Typography variant="body2" color="textSecondary" mb={2}>
                 Withdraw money securely and quickly.
               </Typography>
-              <Button variant="contained" color="error" fullWidth>
+              <Button
+                component={Link}
+                href="/cash-out"
+                variant="contained"
+                color="error"
+                fullWidth
+              >
                 Cash Out
               </Button>
             </CardContent>

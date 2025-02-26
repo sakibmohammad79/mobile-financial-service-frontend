@@ -10,7 +10,26 @@ const agentApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.agent],
     }),
+    getAllAgent: build.query({
+      query: () => ({
+        url: `/agent`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.agent],
+    }),
+    sendBalanceRequest: build.mutation({
+      query: (data) => ({
+        url: `/agent/balance-recharge`,
+        method: "POST",
+        data,
+      }),
+      invalidatesTags: [tagTypes.agent],
+    }),
   }),
 });
 
-export const { useGetSingleAgentQuery } = agentApi;
+export const {
+  useGetSingleAgentQuery,
+  useSendBalanceRequestMutation,
+  useGetAllAgentQuery,
+} = agentApi;

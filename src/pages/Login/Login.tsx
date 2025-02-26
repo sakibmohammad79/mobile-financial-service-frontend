@@ -30,7 +30,15 @@ const Login = () => {
         storeUserInfo(res?.data?.token);
         toast.success(res?.message);
         reset();
-        navigate("/");
+        if (res?.data?.account?.role === "user") {
+          navigate("/");
+        } else if (res?.data?.account?.role === "agent") {
+          navigate("/agent");
+        } else {
+          navigate("/admin");
+        }
+      } else {
+        toast.error(res?.message);
       }
       console.log(res);
     } catch (error) {
