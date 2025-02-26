@@ -1,12 +1,19 @@
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import Navbar from "../pages/Shared/Navbar";
 import Footer from "../pages/Shared/Footer";
+import { getuserInfo } from "../services/authService";
 
 const AdminMain = () => {
+  const { role } = getuserInfo();
+
+  if (role !== "admin") {
+    return <Navigate to="/login" replace />;
+  }
+
   return (
     <div>
       <Navbar />
-      <Outlet></Outlet>
+      <Outlet />
       <Footer />
     </div>
   );

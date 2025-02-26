@@ -1,24 +1,14 @@
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import Navbar from "../pages/Shared/Navbar";
 import Footer from "../pages/Shared/Footer";
+import { getuserInfo } from "../services/authService";
 
 const AgentMain = () => {
-  // const [role, setUserRole] = useState("");
-  // const navigate = useNavigate();
-  // console.log(role);
-  // useEffect(() => {
-  //   const userInfo = getuserInfo();
-  //   console.log(userInfo);
-  //   if (userInfo) {
-  //     setUserRole(userInfo?.role);
-  //   }
-  // }, [role]);
+  const { role } = getuserInfo();
 
-  // if (role === "user") {
-  //   navigate("/home");
-  // } else if (role === "agent") {
-  //   navigate("/register");
-  // }
+  if (role !== "agent") {
+    return <Navigate to="/login" replace />;
+  }
   return (
     <div>
       <Navbar />
