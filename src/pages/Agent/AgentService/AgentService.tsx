@@ -5,10 +5,12 @@ import {
   Grid,
   Typography,
   Button,
+  Box,
+  Link,
 } from "@mui/material";
-import { Send, MoneyOff } from "@mui/icons-material";
+import { Send, AccountBalanceWallet } from "@mui/icons-material";
 
-const UserService = () => {
+const AgenService = () => {
   return (
     <Container
       maxWidth="lg"
@@ -22,37 +24,38 @@ const UserService = () => {
       </Typography>
 
       <Grid container spacing={3} justifyContent="center">
+        {/* Cash In */}
+
+        <Grid item xs={12} sm={4} component={Link} href="/agent/cashin">
+          <Card sx={{ borderRadius: 3, boxShadow: 3, textAlign: "center" }}>
+            <CardContent>
+              <AccountBalanceWallet sx={{ fontSize: 40, color: "#2e7d32" }} />
+              <Typography variant="h6" mt={1} fontWeight="bold">
+                Cash In
+              </Typography>
+              <Typography variant="body2" color="textSecondary" mb={2}>
+                Cash in to user account easily.
+              </Typography>
+              <Button variant="contained" color="success" fullWidth>
+                Cash In
+              </Button>
+            </CardContent>
+          </Card>
+        </Grid>
+
         {/* Send Money */}
         <Grid item xs={12} sm={4}>
           <Card sx={{ borderRadius: 3, boxShadow: 3, textAlign: "center" }}>
             <CardContent>
               <Send sx={{ fontSize: 40, color: "#1976d2" }} />
               <Typography variant="h6" mt={1} fontWeight="bold">
-                Send Money
+                Balance Request
               </Typography>
               <Typography variant="body2" color="textSecondary" mb={2}>
-                Instantly transfer money to anyone.
+                Send balance request to admin
               </Typography>
               <Button variant="contained" fullWidth>
-                Send Money
-              </Button>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* Cash Out */}
-        <Grid item xs={12} sm={4}>
-          <Card sx={{ borderRadius: 3, boxShadow: 3, textAlign: "center" }}>
-            <CardContent>
-              <MoneyOff sx={{ fontSize: 40, color: "#d32f2f" }} />
-              <Typography variant="h6" mt={1} fontWeight="bold">
-                Cash Out
-              </Typography>
-              <Typography variant="body2" color="textSecondary" mb={2}>
-                Withdraw money securely and quickly.
-              </Typography>
-              <Button variant="contained" color="error" fullWidth>
-                Cash Out
+                Balance Request
               </Button>
             </CardContent>
           </Card>
@@ -62,4 +65,4 @@ const UserService = () => {
   );
 };
 
-export default UserService;
+export default AgenService;

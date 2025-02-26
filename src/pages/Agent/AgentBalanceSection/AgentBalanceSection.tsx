@@ -1,30 +1,28 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useEffect, useState } from "react";
+import { useGetSingleAgentQuery } from "../../../redux/api/agentApi";
+import { getuserInfo } from "../../../services/authService";
 import {
   Avatar,
   Card,
   CardContent,
+  CircularProgress,
   Container,
   Grid,
   Typography,
-  CircularProgress,
 } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useGetSingleUserQuery } from "../../../redux/api/userApi";
-import { getuserInfo } from "../../../services/authService";
 
-const BalanceSection = () => {
-  const [userId, setUserId] = useState("");
+const AgentBalanceSection = () => {
+  const [agentId, setAgentId] = useState("");
 
   useEffect(() => {
     const userInfo = getuserInfo();
     if (userInfo) {
-      setUserId(userInfo?.id);
+      setAgentId(userInfo?.id);
     }
   }, []);
 
-  const { data, isLoading } = useGetSingleUserQuery(userId);
+  const { data, isLoading } = useGetSingleAgentQuery(agentId);
   const [balanceVisible, setBalanceVisible] = useState(false);
-
   return (
     <Container maxWidth="xl" sx={{ mb: 6, mt: 3 }}>
       <Grid container spacing={3} padding={3}>
@@ -92,4 +90,4 @@ const BalanceSection = () => {
   );
 };
 
-export default BalanceSection;
+export default AgentBalanceSection;

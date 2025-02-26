@@ -10,7 +10,16 @@ const transactionApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.transaction],
     }),
+    cashIn: build.mutation({
+      query: (data) => ({
+        url: "/transition/cash-in",
+        method: "POST",
+        contentType: "application/json",
+        data,
+      }),
+      invalidatesTags: [tagTypes.transaction],
+    }),
   }),
 });
 
-export const { useGetUserTransactionQuery } = transactionApi;
+export const { useGetUserTransactionQuery, useCashInMutation } = transactionApi;

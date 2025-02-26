@@ -13,6 +13,7 @@ import {
   Button,
   Paper,
   CircularProgress,
+  Box,
 } from "@mui/material";
 import { useGetUserTransactionQuery } from "../../../redux/api/transactionApi";
 import { useEffect, useState } from "react";
@@ -45,64 +46,66 @@ const UserTransaction = () => {
   }
 
   return (
-    <Grid item xs={12}>
-      <Card sx={{ borderRadius: 3, boxShadow: 3 }}>
-        <CardContent>
-          <Typography variant="h6" fontWeight="bold" mb={2}>
-            Recent Transactions
-          </Typography>
-
-          {/* Handle No Transactions */}
-          {!transactions || transactions.length === 0 ? (
-            <Typography textAlign="center" color="text.secondary">
-              No transactions found.
+    <Box mb={12}>
+      <Grid item xs={12}>
+        <Card sx={{ borderRadius: 3, boxShadow: 3 }}>
+          <CardContent>
+            <Typography variant="h6" fontWeight="bold" mb={2}>
+              Recent Transactions
             </Typography>
-          ) : (
-            <TableContainer component={Paper} sx={{ borderRadius: 2 }}>
-              <Table>
-                <TableHead>
-                  <TableRow sx={{ backgroundColor: "#f5f5f5" }}>
-                    <TableCell sx={{ fontWeight: "bold" }}>Type</TableCell>
-                    <TableCell sx={{ fontWeight: "bold" }}>
-                      Amount (Taka)
-                    </TableCell>
-                    <TableCell sx={{ fontWeight: "bold" }}>
-                      Sender Type
-                    </TableCell>
-                    <TableCell sx={{ fontWeight: "bold" }}>Fee</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {transactions
-                    .slice(0, visibleCount)
-                    .map((tx: any, index: number) => (
-                      <TableRow key={index}>
-                        <TableCell>{tx?.type}</TableCell>
-                        <TableCell sx={{ fontWeight: "bold" }}>
-                          {tx?.amount}
-                        </TableCell>
-                        <TableCell>{tx?.senderType}</TableCell>
-                        <TableCell>{tx?.fee}</TableCell>
-                      </TableRow>
-                    ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          )}
 
-          {/* Show More Button */}
-          {transactions && transactions.length > visibleCount && (
-            <Button
-              variant="contained"
-              sx={{ mt: 2, display: "block", mx: "auto", borderRadius: 2 }}
-              onClick={() => setVisibleCount((prev) => prev + 5)}
-            >
-              See More
-            </Button>
-          )}
-        </CardContent>
-      </Card>
-    </Grid>
+            {/* Handle No Transactions */}
+            {!transactions || transactions.length === 0 ? (
+              <Typography textAlign="center" color="text.secondary">
+                No transactions found.
+              </Typography>
+            ) : (
+              <TableContainer component={Paper} sx={{ borderRadius: 2 }}>
+                <Table>
+                  <TableHead>
+                    <TableRow sx={{ backgroundColor: "#f5f5f5" }}>
+                      <TableCell sx={{ fontWeight: "bold" }}>Type</TableCell>
+                      <TableCell sx={{ fontWeight: "bold" }}>
+                        Amount (Taka)
+                      </TableCell>
+                      <TableCell sx={{ fontWeight: "bold" }}>
+                        Sender Type
+                      </TableCell>
+                      <TableCell sx={{ fontWeight: "bold" }}>Fee</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {transactions
+                      .slice(0, visibleCount)
+                      .map((tx: any, index: number) => (
+                        <TableRow key={index}>
+                          <TableCell>{tx?.type}</TableCell>
+                          <TableCell sx={{ fontWeight: "bold" }}>
+                            {tx?.amount}
+                          </TableCell>
+                          <TableCell>{tx?.senderType}</TableCell>
+                          <TableCell>{tx?.fee}</TableCell>
+                        </TableRow>
+                      ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            )}
+
+            {/* Show More Button */}
+            {transactions && transactions.length > visibleCount && (
+              <Button
+                variant="contained"
+                sx={{ mt: 2, display: "block", mx: "auto", borderRadius: 2 }}
+                onClick={() => setVisibleCount((prev) => prev + 5)}
+              >
+                See More
+              </Button>
+            )}
+          </CardContent>
+        </Card>
+      </Grid>
+    </Box>
   );
 };
 

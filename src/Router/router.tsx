@@ -5,6 +5,7 @@ import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import AgentMain from "../Layout/Main";
 import Agent from "../pages/Agent/Agent/Agent";
+import CashInService from "../pages/Agent/CashInService/CashInService";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
       {
         path: "/agent",
         element: <Agent />,
+      },
+      {
+        path: "/agent/cashin",
+        element: <CashInService />,
       },
     ],
   },
