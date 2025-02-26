@@ -3,6 +3,8 @@ import Home from "../pages/Home/Home/Home";
 import Main from "../Layout/Main";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
+import AgentMain from "../Layout/Main";
+import Agent from "../pages/Agent/Agent/Agent";
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +22,16 @@ export const router = createBrowserRouter([
       {
         path: "register",
         element: <Register />,
+      },
+    ],
+  },
+  {
+    path: "/",
+    element: <AgentMain />,
+    children: [
+      {
+        path: "/agent",
+        element: <Agent />,
       },
     ],
   },

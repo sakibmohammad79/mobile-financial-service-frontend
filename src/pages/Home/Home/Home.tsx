@@ -1,8 +1,14 @@
+import BalanceSection from "../BalanceSection/BalanceSection";
+import UserService from "../UserService/UserService";
+import UserTransaction from "../UserTransaction/UserTransaction";
+
 const Home = () => {
   return (
-    <div>
-      <h2>This is Home component</h2>
-    </div>
+    <>
+      <BalanceSection />
+      <UserService />
+      <UserTransaction />
+    </>
   );
 };
 

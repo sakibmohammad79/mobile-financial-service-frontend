@@ -10,6 +10,7 @@ const AuthButton = () => {
 
   useEffect(() => {
     const userInfo = getuserInfo();
+    console.log(userInfo);
     if (userInfo) {
       setUserId(userInfo?.id);
     }

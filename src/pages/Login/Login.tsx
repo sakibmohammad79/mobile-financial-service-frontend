@@ -26,7 +26,7 @@ const Login = () => {
     console.log(data);
     try {
       const res = await login(data);
-      if (res?.data?.user?._id) {
+      if (res?.data?.account?._id) {
         storeUserInfo(res?.data?.token);
         toast.success(res?.message);
         reset();
