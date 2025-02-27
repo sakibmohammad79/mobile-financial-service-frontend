@@ -101,7 +101,7 @@ const ManageUser = () => {
     },
   ];
   return (
-    <Box px={2}>
+    <Box px={2} minHeight={"100vh"}>
       {isLoading ? (
         <Box
           sx={{

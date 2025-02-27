@@ -7,10 +7,10 @@ import {
   useAgentBlockedMutation,
   useGetAllAgentQuery,
 } from "../../../../redux/api/agentApi";
-
-// const allowedStatuses = ["ACTIVE", "BLOCKED", "DELETED"];
+import { useNavigate } from "react-router-dom";
 
 const ManageAgent = () => {
+  const navigate = useNavigate();
   const { data, isLoading, isError } = useGetAllAgentQuery({});
   const [userBlocked] = useAgentBlockedMutation();
 
@@ -32,16 +32,15 @@ const ManageAgent = () => {
 
   const rows = data?.map((user: any) => ({ id: user._id, ...user })) || [];
 
-  const handleBlockUser = async (user: any) => {
-    const res = await userBlocked(user?._id);
+  const handleBlockUser = async (agent: any) => {
+    const res = await userBlocked(agent?._id);
     if (res?.data?._id) {
       toast.success("User blocked!");
     }
   };
 
-  const handleViewTransactions = (user: any) => {
-    console.log(`Viewing transactions for user ID: ${user._id}`);
-    // Navigate to transactions page or open a modal
+  const handleViewTransactions = (agent: any) => {
+    navigate(`/admin/agent-transaction/${agent._id}`);
   };
 
   const columns: GridColDef[] = [
@@ -102,7 +101,7 @@ const ManageAgent = () => {
     },
   ];
   return (
-    <Box px={2}>
+    <Box px={2} minHeight={"100vh"}>
       {isLoading ? (
         <Box
           sx={{

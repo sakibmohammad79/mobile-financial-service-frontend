@@ -20,17 +20,20 @@ import { useEffect, useState } from "react";
 import { getuserInfo } from "../../../services/authService";
 
 const AgentTransaction = () => {
-  const [userId, setUserId] = useState("");
-  const [visibleCount, setVisibleCount] = useState(5); // Initially show 5 transactions
+  const [agentId, setAgentId] = useState("");
+  const [visibleCount, setVisibleCount] = useState(5);
 
   useEffect(() => {
     const userInfo = getuserInfo();
     if (userInfo) {
-      setUserId(userInfo?.id);
+      setAgentId(userInfo?.id);
     }
-  }, []);
+  }, [agentId]);
+  console.log(agentId);
 
-  const { data: transactions, isLoading } = useGetAgentTransactionQuery(userId);
+  const { data: transactions, isLoading } =
+    useGetAgentTransactionQuery(agentId);
+  console.log(transactions);
 
   // Handle loading state
   if (isLoading) {
@@ -97,7 +100,13 @@ const AgentTransaction = () => {
             {transactions && transactions.length > visibleCount && (
               <Button
                 variant="contained"
-                sx={{ mt: 2, display: "block", mx: "auto", borderRadius: 2 }}
+                sx={{
+                  mt: 2,
+                  display: "block",
+                  mx: "auto",
+                  borderRadius: 2,
+                  bgcolor: "#E2136E",
+                }}
                 onClick={() => setVisibleCount((prev) => prev + 5)}
               >
                 See More

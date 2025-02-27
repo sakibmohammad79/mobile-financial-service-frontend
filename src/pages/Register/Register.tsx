@@ -26,7 +26,7 @@ const Register = () => {
   const onSubmit = async (data: any) => {
     const userRegisterData = { user: data };
     const agentRegisterData = { agent: data };
-    console.log(agentRegisterData);
+
     try {
       let res;
       if (data.role === "user") {

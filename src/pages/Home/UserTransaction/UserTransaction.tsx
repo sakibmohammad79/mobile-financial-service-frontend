@@ -98,7 +98,13 @@ const UserTransaction = () => {
             {transactions && transactions.length > visibleCount && (
               <Button
                 variant="contained"
-                sx={{ mt: 2, display: "block", mx: "auto", borderRadius: 2 }}
+                sx={{
+                  mt: 2,
+                  display: "block",
+                  mx: "auto",
+                  borderRadius: 2,
+                  bgcolor: "#E2136E",
+                }}
                 onClick={() => setVisibleCount((prev) => prev + 5)}
               >
                 See More

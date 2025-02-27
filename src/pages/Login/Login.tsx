@@ -23,7 +23,6 @@ const Login = () => {
     formState: { errors },
   } = useForm();
   const onSubmit = async (data: any) => {
-    console.log(data);
     try {
       const res = await login(data);
       if (res?.data?.account?._id) {
@@ -40,7 +39,6 @@ const Login = () => {
       } else {
         toast.error(res?.message);
       }
-      console.log(res);
     } catch (error) {
       console.error("Login Failed:", error);
     }

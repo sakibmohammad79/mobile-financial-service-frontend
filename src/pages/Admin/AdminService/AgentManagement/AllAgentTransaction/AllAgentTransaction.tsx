@@ -2,12 +2,12 @@
 import { useParams } from "react-router-dom";
 import { Box, Typography, CircularProgress } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { useGetUserTransactionQuery } from "../../../../../redux/api/transactionApi";
+import { useGetAgentTransactionQuery } from "../../../../../redux/api/transactionApi";
 
-const UserTransactions = () => {
-  const { userId } = useParams();
+const AllAgentTransaction = () => {
+  const { agentId } = useParams();
 
-  const { data, isLoading, isError } = useGetUserTransactionQuery(userId);
+  const { data, isLoading, isError } = useGetAgentTransactionQuery(agentId);
 
   if (isLoading) {
     return (
@@ -42,11 +42,11 @@ const UserTransactions = () => {
   return (
     <Box px={2} my={3} minHeight={"100vh"}>
       <Typography variant="h5" textAlign="center" mb={2}>
-        User Transactions
+        Agent Transactions
       </Typography>
       <DataGrid rows={rows || []} columns={columns} />
     </Box>
   );
 };
 
-export default UserTransactions;
+export default AllAgentTransaction;

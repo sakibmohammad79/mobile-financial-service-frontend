@@ -36,7 +36,6 @@ const CashInService = () => {
   const { data: usersData, isLoading: isUserLoading } = useGetAllUserQuery({});
 
   const onSubmit = async (formData: any) => {
-    console.log(formData);
     try {
       const response = await cashIn({
         userId: formData.userId,
@@ -44,7 +43,7 @@ const CashInService = () => {
         amount: Number(formData.amount),
         pin: formData.pin,
       });
-      console.log(response);
+
       if (response?.data?._id) {
         toast.success("Cash-IN successfully!");
         reset();
@@ -168,7 +167,7 @@ const CashInService = () => {
               variant="contained"
               color="primary"
               fullWidth
-              sx={{ mt: 2 }}
+              sx={{ mt: 2, bgcolor: "#E2136E" }}
               disabled={isSubmitting}
             >
               {isSubmitting ? (

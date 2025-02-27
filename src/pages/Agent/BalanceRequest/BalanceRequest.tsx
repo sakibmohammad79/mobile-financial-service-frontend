@@ -83,7 +83,7 @@ const BalanceRequest = () => {
               variant="contained"
               color="primary"
               fullWidth
-              sx={{ mt: 2 }}
+              sx={{ mt: 2, bgcolor: "#E2136E" }}
               startIcon={isLoading ? <CircularProgress size={20} /> : <Send />}
               disabled={isLoading}
             >

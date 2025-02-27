@@ -19,6 +19,8 @@ import AddMoneyToAgent from "../pages/Admin/AdminService/AddMoney/AddMoney";
 import PrivateRoute from "./PrivateRoute";
 import UserTransactions from "../pages/Admin/AdminService/UserManagement/AllUserTransaction/AllUserTransaction";
 
+import AllAgentTransaction from "../pages/Admin/AdminService/AgentManagement/AllAgentTransaction/AllAgentTransaction";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -103,6 +105,10 @@ export const router = createBrowserRouter([
       {
         path: "/admin/user-transaction/:userId",
         element: <UserTransactions />,
+      },
+      {
+        path: "/admin/agent-transaction/:agentId",
+        element: <AllAgentTransaction />,
       },
     ],
   },

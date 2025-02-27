@@ -29,7 +29,7 @@ const RechargeRequest = () => {
 
   const handleApprovedRechageRequest = async (request: any) => {
     const res = await approvedRechargeRequest(request?._id);
-    console.log(res);
+
     if (res?.data?._id) {
       toast.success("Balance Recharge request approved!");
     }
@@ -77,7 +77,7 @@ const RechargeRequest = () => {
   ];
 
   return (
-    <Box px={2}>
+    <Box px={2} minHeight={"100vh"}>
       {isLoading ? (
         <Box
           sx={{
