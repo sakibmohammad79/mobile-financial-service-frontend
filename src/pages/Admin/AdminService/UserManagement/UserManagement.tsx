@@ -9,10 +9,10 @@ import {
   useUserBlockedMutation,
 } from "../../../../redux/api/userApi";
 import { toast } from "sonner";
-
-// const allowedStatuses = ["ACTIVE", "BLOCKED", "DELETED"];
+import { useNavigate } from "react-router-dom";
 
 const ManageUser = () => {
+  const navigate = useNavigate();
   const { data, isLoading, isError } = useGetAllUserQuery({});
   const [userBlocked] = useUserBlockedMutation();
 
@@ -40,11 +40,9 @@ const ManageUser = () => {
       toast.success("User blocked!");
     }
   };
-
   const handleViewTransactions = (user: any) => {
-    console.log(`Viewing transactions for user ID: ${user._id}`);
+    navigate(`/admin/user-transaction/${user._id}`);
   };
-
   const columns: GridColDef[] = [
     { field: "name", headerName: "Name", flex: 1 },
     { field: "email", headerName: "Email", flex: 1 },

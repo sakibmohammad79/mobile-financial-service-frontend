@@ -16,6 +16,8 @@ import ManageUser from "../pages/Admin/AdminService/UserManagement/UserManagemen
 import ManageAgent from "../pages/Admin/AdminService/AgentManagement/AgentManagement";
 import RechargeRequest from "../pages/Admin/AdminService/RechargeRequest/RechargeRequest";
 import AddMoneyToAgent from "../pages/Admin/AdminService/AddMoney/AddMoney";
+import PrivateRoute from "./PrivateRoute";
+import UserTransactions from "../pages/Admin/AdminService/UserManagement/AllUserTransaction/AllUserTransaction";
 
 export const router = createBrowserRouter([
   {
@@ -24,7 +26,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: (
+          <PrivateRoute>
+            <Home />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/send-money",
@@ -50,7 +56,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/agent",
-        element: <Agent />,
+        element: (
+          <PrivateRoute>
+            <Agent />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/agent/cashin",
@@ -68,7 +78,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/admin",
-        element: <Admin />,
+        element: (
+          <PrivateRoute>
+            <Admin />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/admin/manage-user",
@@ -85,6 +99,10 @@ export const router = createBrowserRouter([
       {
         path: "/admin/add-money",
         element: <AddMoneyToAgent />,
+      },
+      {
+        path: "/admin/user-transaction/:userId",
+        element: <UserTransactions />,
       },
     ],
   },
