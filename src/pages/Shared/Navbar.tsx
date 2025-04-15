@@ -12,14 +12,13 @@ import AuthButton from "../../components/UI/AuthButton";
 import { useNavigate } from "react-router-dom";
 import { getuserInfo } from "../../services/authService";
 
-const pages = ["Service", "About", "Blog"];
+// const pages = ["Service", "About", "Blog"];
 
 function ResponsiveAppBar() {
   const navigate = useNavigate();
   const { role } = getuserInfo();
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
+
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -31,9 +30,10 @@ function ResponsiveAppBar() {
 
   const handleNavigate = (page: string) => {
     const routes: Record<string, string> = {
-      service: `/${role}`,
+      service: `/${role}`, // dynamic by role
       about: "/about",
       blog: "/blog",
+      "admin dashboard": "/admin/dashboard", // new route
     };
 
     const path = routes[page.toLowerCase()];
@@ -41,6 +41,12 @@ function ResponsiveAppBar() {
       navigate(path);
     }
   };
+
+  // Dynamically create the pages array based on role
+  const pages = ["Service", "About", "Blog"];
+  if (role === "admin") {
+    pages.push("Admin Dashboard");
+  }
 
   return (
     <AppBar position="static" sx={{ background: "#E2136E" }}>

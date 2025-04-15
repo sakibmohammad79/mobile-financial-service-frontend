@@ -27,6 +27,7 @@ import NotFound from "../pages/NotFound/NotFound";
 import About from "../pages/About/About";
 import Blog from "../pages/Blog/Blog";
 import AuthLayout from "../Layout/AuthLayout";
+import AdminDashboard from "../pages/Admin/AdminDashboard/AdminDashboard";
 
 export const router = createBrowserRouter([
   {
@@ -166,6 +167,16 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      {
+        path: "/admin/dashboard",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+             <AdminDashboard/>
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
       {
         path: "/admin",
         element: (

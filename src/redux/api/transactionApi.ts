@@ -3,6 +3,13 @@ import { baseApi } from "./baseApi";
 
 const transactionApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
+    getAllTransaction: build.query({
+      query: () => ({
+        url: `/transition`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.transaction],
+    }),
     getUserTransaction: build.query({
       query: (id) => ({
         url: `/transition/user/${id}`,
@@ -63,4 +70,5 @@ export const {
   useCashOutMutation,
   useGetAgentTransactionQuery,
   useAddMoneyMutation,
+  useGetAllTransactionQuery
 } = transactionApi;
