@@ -2,7 +2,7 @@ import { Container, Typography, Box, Link } from "@mui/material";
 
 const Footer = () => {
   return (
-    <Box sx={{ bgcolor: "#E2136E", color: "white", py: 3, mt: 5 }}>
+    <Box sx={{ bgcolor: "#E2136E", color: "white", py: 3 }}>
       <Container maxWidth="lg">
         <Box
           sx={{
@@ -13,16 +13,21 @@ const Footer = () => {
           }}
         >
           <Typography variant="body1">
-            &copy; {new Date().getFullYear()} Your Company Name
+            &copy; {new Date().getFullYear()} Mobile financial system
           </Typography>
           <Box>
-            <Link href="/about" color="inherit" sx={{ mx: 1 }}>
+            <Link underline="none" href="/about" color="inherit" sx={{ mx: 1 }}>
               About
             </Link>
-            <Link href="/contact" color="inherit" sx={{ mx: 1 }}>
-              Contact
+            <Link underline="none" href="/blog" color="inherit" sx={{ mx: 1 }}>
+              Blog
             </Link>
-            <Link href="/privacy-policy" color="inherit" sx={{ mx: 1 }}>
+            <Link
+              underline="none"
+              href="/privacy-policy"
+              color="inherit"
+              sx={{ mx: 1 }}
+            >
               Privacy Policy
             </Link>
           </Box>

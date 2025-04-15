@@ -7,10 +7,10 @@ import {
   Button,
   Link,
 } from "@mui/material";
-import { Send, AccountBalanceWallet } from "@mui/icons-material";
+import { Send, MoneyOff } from "@mui/icons-material";
 import { motion } from "framer-motion";
 
-const AgenService = () => {
+const UserService = () => {
   return (
     <Container
       maxWidth="lg"
@@ -19,12 +19,18 @@ const AgenService = () => {
         mb: 12,
       }}
     >
-      <Typography variant="h5" fontWeight="bold" textAlign="center" mb={3}>
+      <Typography
+        color="#E2136E"
+        variant="h5"
+        fontWeight="bold"
+        textAlign="center"
+        mb={4}
+      >
         Quick Actions
       </Typography>
 
       <Grid container spacing={3} justifyContent="center">
-        {/* Cash In */}
+        {/* Send Money */}
         <Grid item xs={12} sm={4}>
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
@@ -33,12 +39,12 @@ const AgenService = () => {
           >
             <Card sx={{ borderRadius: 3, boxShadow: 4, textAlign: "center" }}>
               <CardContent>
-                <AccountBalanceWallet sx={{ fontSize: 42, color: "#43a047" }} />
+                <Send sx={{ fontSize: 40, color: "#E2136E" }} />
                 <Typography variant="h6" mt={1} fontWeight="bold">
-                  Cash In
+                  Send Money
                 </Typography>
                 <Typography variant="body2" color="textSecondary" mb={2}>
-                  Cash in to user account easily.
+                  Instantly transfer money to anyone.
                 </Typography>
                 <motion.div
                   whileHover={{ scale: 1.05 }}
@@ -46,15 +52,15 @@ const AgenService = () => {
                 >
                   <Button
                     component={Link}
-                    href="/agent/cashin"
+                    href="/user/send-money"
                     variant="contained"
-                    fullWidth
                     sx={{
-                      backgroundColor: "#43a047",
-                      "&:hover": { backgroundColor: "#388e3c" },
+                      bgcolor: "#E2136E",
+                      "&:hover": { bgcolor: "#C51162" },
                     }}
+                    fullWidth
                   >
-                    Cash In
+                    Send Money
                   </Button>
                 </motion.div>
               </CardContent>
@@ -62,7 +68,7 @@ const AgenService = () => {
           </motion.div>
         </Grid>
 
-        {/* Balance Request */}
+        {/* Cash Out */}
         <Grid item xs={12} sm={4}>
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
@@ -71,12 +77,12 @@ const AgenService = () => {
           >
             <Card sx={{ borderRadius: 3, boxShadow: 4, textAlign: "center" }}>
               <CardContent>
-                <Send sx={{ fontSize: 42, color: "#1565c0" }} />
+                <MoneyOff sx={{ fontSize: 40, color: "#00CEFF" }} />
                 <Typography variant="h6" mt={1} fontWeight="bold">
-                  Balance Request
+                  Cash Out
                 </Typography>
                 <Typography variant="body2" color="textSecondary" mb={2}>
-                  Send balance request to admin
+                  Withdraw money securely and quickly.
                 </Typography>
                 <motion.div
                   whileHover={{ scale: 1.05 }}
@@ -84,15 +90,15 @@ const AgenService = () => {
                 >
                   <Button
                     component={Link}
-                    href="/agent/balance-request"
+                    href="/user/cash-out"
                     variant="contained"
-                    fullWidth
                     sx={{
-                      backgroundColor: "#1565c0",
-                      "&:hover": { backgroundColor: "#0d47a1" },
+                      bgcolor: "#00CEFF",
+                      "&:hover": { bgcolor: "#00A5FF" },
                     }}
+                    fullWidth
                   >
-                    Balance Request
+                    Cash Out
                   </Button>
                 </motion.div>
               </CardContent>
@@ -104,4 +110,4 @@ const AgenService = () => {
   );
 };
 
-export default AgenService;
+export default UserService;

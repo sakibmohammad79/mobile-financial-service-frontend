@@ -6,15 +6,18 @@ import {
   TextField,
   Button,
   Typography,
-  Container,
   Autocomplete,
   CircularProgress,
+  Box,
 } from "@mui/material";
-import { useCashInMutation } from "../../../redux/api/transactionApi";
-import { useGetAllUserQuery } from "../../../redux/api/userApi";
-import { getuserInfo } from "../../../services/authService";
+
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { getuserInfo } from "../../../../services/authService";
+import { useCashInMutation } from "../../../../redux/api/transactionApi";
+import { useGetAllUserQuery } from "../../../../redux/api/userApi";
+import { useGetSingleAgentQuery } from "../../../../redux/api/agentApi";
+import { AccountBalanceWallet } from "@mui/icons-material";
 
 const CashInService = () => {
   const navigate = useNavigate();
@@ -34,8 +37,17 @@ const CashInService = () => {
 
   const [cashIn, { isLoading: isSubmitting }] = useCashInMutation();
   const { data: usersData, isLoading: isUserLoading } = useGetAllUserQuery({});
+  const { data: agentData } = useGetSingleAgentQuery(id);
 
   const onSubmit = async (formData: any) => {
+    if (Number(formData.amount) < 50) {
+      toast.error("Minimum transaction amount is 50 Taka.");
+      return;
+    }
+    if (agentData.balance < Number(formData.amount)) {
+      toast.error("Insufficient balance. Please recharge first!");
+      return;
+    }
     try {
       const response = await cashIn({
         userId: formData.userId,
@@ -49,7 +61,7 @@ const CashInService = () => {
         reset();
         navigate("/agent");
       } else {
-        toast.error("Cash-In failed! Check balance & PIN!");
+        toast.error("Cash-In failed! Check your PIN!");
       }
     } catch (err: any) {
       console.error(err);
@@ -58,28 +70,44 @@ const CashInService = () => {
   };
 
   return (
-    <Container
-      maxWidth="sm"
+    <Box
       sx={{
-        height: "100vh",
         display: "flex",
-        justifyContent: "center",
         alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
+        backgroundColor: "#f4f4f9",
       }}
     >
       <Card
         sx={{
-          width: "100%",
-          maxWidth: 500,
-          p: 3,
+          width: { xs: "90%", sm: "80%", md: "40%" },
+
+          p: { xs: 2, sm: 3 },
           boxShadow: 3,
           borderRadius: 2,
         }}
       >
         <CardContent>
-          <Typography variant="h5" textAlign="center" mb={2}>
+          <Typography
+            color="#43A047"
+            fontWeight={600}
+            variant="h5"
+            textAlign="center"
+            mb={2}
+          >
             Cash-In Service
           </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: 80,
+            }}
+          >
+            <AccountBalanceWallet sx={{ fontSize: 42, color: "#43a047" }} />
+          </Box>
 
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* Mobile Number Dropdown */}
@@ -167,7 +195,13 @@ const CashInService = () => {
               variant="contained"
               color="primary"
               fullWidth
-              sx={{ mt: 2, bgcolor: "#E2136E" }}
+              sx={{
+                mt: 2,
+                bgcolor: "#43A047",
+                "&:hover": { bgcolor: "#007C00" },
+                fontSize: { xs: "0.9rem", sm: "1rem" },
+                py: 1.5, // Adjusting padding for touch-friendly buttons
+              }}
               disabled={isSubmitting}
             >
               {isSubmitting ? (
@@ -179,7 +213,7 @@ const CashInService = () => {
           </form>
         </CardContent>
       </Card>
-    </Container>
+    </Box>
   );
 };
 

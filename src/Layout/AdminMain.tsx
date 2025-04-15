@@ -4,11 +4,11 @@ import Footer from "../pages/Shared/Footer";
 
 const AdminMain = () => {
   return (
-    <div>
+    <>
       <Navbar />
       <Outlet />
       <Footer />
-    </div>
+    </>
   );
 };
 

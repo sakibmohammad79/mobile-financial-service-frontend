@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 
 const UserRoute = ({ children }: { children: ReactNode }) => {
   const [role, loading] = useUserRole();
+
   const location = useLocation();
 
   if (loading) {
@@ -11,7 +12,6 @@ const UserRoute = ({ children }: { children: ReactNode }) => {
   }
 
   if (role === "user") {
-    // ✅ Now correctly checks for "admin"
     return children;
   }
 

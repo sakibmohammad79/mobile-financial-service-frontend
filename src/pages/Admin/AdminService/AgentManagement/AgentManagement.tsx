@@ -1,18 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, Chip } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import CircularProgress from "@mui/material/CircularProgress";
 import { toast } from "sonner";
 import {
   useAgentBlockedMutation,
+  useAgentUnBlockedMutation,
   useGetAllAgentQuery,
 } from "../../../../redux/api/agentApi";
 import { useNavigate } from "react-router-dom";
 
 const ManageAgent = () => {
   const navigate = useNavigate();
-  const { data, isLoading, isError } = useGetAllAgentQuery({});
+  const { data, isLoading, isError, refetch } = useGetAllAgentQuery({});
   const [userBlocked] = useAgentBlockedMutation();
+  const [userUnBlocked] = useAgentUnBlockedMutation();
 
   if (data?.length < 0) {
     return (
@@ -33,9 +35,22 @@ const ManageAgent = () => {
   const rows = data?.map((user: any) => ({ id: user._id, ...user })) || [];
 
   const handleBlockUser = async (agent: any) => {
-    const res = await userBlocked(agent?._id);
-    if (res?.data?._id) {
-      toast.success("User blocked!");
+    try {
+      if (agent.isActive) {
+        const res = await userBlocked(agent._id);
+        if (res?.data?._id) {
+          toast.success("User blocked!");
+        }
+      } else {
+        const res = await userUnBlocked(agent._id);
+        if (res?.data?._id) {
+          toast.success("User unblocked!");
+        }
+      }
+      refetch(); // Fetch the latest data after action
+    } catch (error) {
+      console.log(error);
+      toast.error("Action failed. Try again.");
     }
   };
 
@@ -47,7 +62,8 @@ const ManageAgent = () => {
     { field: "name", headerName: "Name", flex: 1 },
     { field: "email", headerName: "Email", flex: 1 },
     { field: "mobileNumber", headerName: "Phone", flex: 1 },
-    { field: "role", headerName: "Role" },
+    { field: "role", headerName: "Role", flex: 1 },
+    { field: "balance", headerName: "Balance", flex: 1 },
     { field: "nid", headerName: "NID NO", width: 150 },
     {
       field: "isActive",
@@ -61,11 +77,29 @@ const ManageAgent = () => {
             justifyContent: "center",
             width: "100%",
             height: "100%",
-            color: row.isActive ? "green" : "red",
-            fontWeight: "bold",
           }}
         >
-          <Typography>{row.isActive ? "Active" : "Inactive"}</Typography>
+          <Chip
+            label={row.isActive ? "Active" : "Inactive"}
+            color={row.isActive ? "success" : "error"}
+            size="small"
+            variant="filled"
+          />
+        </Box>
+      ),
+    },
+    {
+      field: "verify",
+      headerName: "Verify",
+      flex: 1,
+      renderCell: ({ row }) => (
+        <Box sx={{ width: "100%" }}>
+          <Chip
+            label={row.isVerified ? "Verified" : "Not Verified"}
+            color={row.isVerified ? "primary" : "warning"}
+            size="small"
+            variant="filled"
+          />
         </Box>
       ),
     },
@@ -100,6 +134,7 @@ const ManageAgent = () => {
       ),
     },
   ];
+
   return (
     <Box px={2} minHeight={"100vh"}>
       {isLoading ? (
@@ -119,11 +154,11 @@ const ManageAgent = () => {
         </Typography>
       ) : rows?.length > 0 ? (
         <Box my={2} justifyContent="center" alignItems="center">
-          <DataGrid rows={rows} columns={columns} hideFooter />
+          <DataGrid rows={rows} columns={columns} />
         </Box>
       ) : (
         <Typography variant="h6" textAlign="center" mt={2}>
-          No donors available.
+          No agents available.
         </Typography>
       )}
     </Box>

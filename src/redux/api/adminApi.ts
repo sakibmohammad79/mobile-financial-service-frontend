@@ -24,6 +24,13 @@ const adminApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.admin],
     }),
+    rejectRechargeRequest: build.mutation({
+      query: (id) => ({
+        url: `/admin/reject-balance-recharge/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: [tagTypes.admin],
+    }),
   }),
 });
 
@@ -31,4 +38,5 @@ export const {
   useGetAdminQuery,
   useGetAllRechargeRequestQuery,
   useApprovedRechargeRequestMutation,
+  useRejectRechargeRequestMutation,
 } = adminApi;

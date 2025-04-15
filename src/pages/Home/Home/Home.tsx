@@ -1,14 +1,11 @@
-import BalanceSection from "../BalanceSection/BalanceSection";
-import UserService from "../UserService/UserService";
-import UserTransaction from "../UserTransaction/UserTransaction";
+import { Box } from "@mui/material";
+import HeroSection from "../HeroSection/HeroSection";
 
 const Home = () => {
   return (
-    <>
-      <BalanceSection />
-      <UserService />
-      <UserTransaction />
-    </>
+    <Box>
+      <HeroSection />
+    </Box>
   );
 };
 

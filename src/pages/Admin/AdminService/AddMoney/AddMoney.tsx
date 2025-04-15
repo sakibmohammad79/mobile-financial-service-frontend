@@ -12,14 +12,16 @@ import {
   Select,
   FormControl,
   InputLabel,
+  Box,
 } from "@mui/material";
-import { Payment } from "@mui/icons-material";
+import { AccountBalanceWallet } from "@mui/icons-material";
 
 import { getuserInfo } from "../../../../services/authService";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { useGetAllAgentQuery } from "../../../../redux/api/agentApi";
 import { useAddMoneyMutation } from "../../../../redux/api/transactionApi";
+import { useGetAdminQuery } from "../../../../redux/api/adminApi";
 
 const AddMoneyToAgent = () => {
   const navigate = useNavigate();
@@ -36,7 +38,7 @@ const AddMoneyToAgent = () => {
       pin: "",
     },
   });
-
+  const { data: adminData } = useGetAdminQuery(id);
   const [cashOut, { isLoading }] = useAddMoneyMutation();
   const { data: agentsData, isLoading: isAgentLoading } = useGetAllAgentQuery(
     {}
@@ -46,6 +48,10 @@ const AddMoneyToAgent = () => {
   const verifiedAgents = agentsData?.filter((agent: any) => agent.isVerified);
 
   const onSubmit = async (formData: any) => {
+    if (Number(formData.amount > adminData.totalSystemBalance)) {
+      toast.error("Insufficent system balance balance.");
+      return;
+    }
     try {
       const res = await cashOut({
         agentId: formData.agentId,
@@ -78,9 +84,19 @@ const AddMoneyToAgent = () => {
     >
       <Card sx={{ width: "100%", p: 2, boxShadow: 3, borderRadius: 2 }}>
         <CardContent>
-          <Typography variant="h5" textAlign="center" mb={2}>
+          <Typography color="#4caf50" variant="h5" textAlign="center" mb={2}>
             add money
           </Typography>
+
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <AccountBalanceWallet sx={{ fontSize: 60, color: "#4caf50" }} />
+          </Box>
 
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* Agent Dropdown */}
@@ -129,15 +145,18 @@ const AddMoneyToAgent = () => {
             <Button
               type="submit"
               variant="contained"
-              color="primary"
               fullWidth
-              sx={{ mt: 2 }}
+              sx={{ mt: 2, backgroundColor: "#4caf50" }}
               startIcon={
-                isLoading ? <CircularProgress size={20} /> : <Payment />
+                isLoading ? (
+                  <CircularProgress size={20} />
+                ) : (
+                  <AccountBalanceWallet />
+                )
               }
               disabled={isLoading}
             >
-              {isLoading ? "Processing..." : "Add Money"}
+              {isLoading ? "Processing..." : "Confirm Add Money"}
             </Button>
           </form>
         </CardContent>

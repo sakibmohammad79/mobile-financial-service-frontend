@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useGetSingleAgentQuery } from "../../../redux/api/agentApi";
+
 import { getuserInfo } from "../../../services/authService";
 import {
   Avatar,
@@ -12,18 +12,19 @@ import {
   Box,
 } from "@mui/material";
 import { motion } from "framer-motion";
+import { useGetSingleUserQuery } from "../../../redux/api/userApi";
 
-const AgentBalanceSection = () => {
-  const [agentId, setAgentId] = useState("");
+const UserBalance = () => {
+  const [userId, setUsertId] = useState("");
 
   useEffect(() => {
     const userInfo = getuserInfo();
     if (userInfo) {
-      setAgentId(userInfo?.id);
+      setUsertId(userInfo?.id);
     }
   }, []);
 
-  const { data, isLoading } = useGetSingleAgentQuery(agentId);
+  const { data, isLoading } = useGetSingleUserQuery(userId);
   const [balanceVisible, setBalanceVisible] = useState(false);
 
   return (
@@ -32,51 +33,48 @@ const AgentBalanceSection = () => {
         sx={{
           borderRadius: 4,
           boxShadow: 5,
-          background: "white",
-          padding: 2,
+          background: "#fff",
+          padding: 3,
+          color: "#d81b60",
         }}
       >
         <CardContent>
           {isLoading ? (
             <Grid container justifyContent="center">
-              <CircularProgress sx={{ color: "#E2136E" }} />
+              <CircularProgress sx={{ color: "#d81b60" }} />
             </Grid>
           ) : (
             <Grid
               container
               spacing={3}
-              justifyContent="space-between"
+              justifyContent={"space-between"}
               alignItems={"center"}
             >
-              {/* Avatar & Name Column */}
+              {/* Left Column: Avatar and Name */}
               <Grid
                 item
                 xs={12}
-                sm={4} // 1/3 of the width on larger screens
+                sm={4}
+                md={3}
+                gap={2}
                 sx={{
                   display: "flex",
                   alignItems: "center",
-                  gap: 2,
                   justifyContent: "center",
                 }}
               >
                 <Avatar
                   src="https://i.ibb.co.com/k2vz7Bn4/man-1.png"
                   alt="User Avatar"
-                  sx={{ width: 64, height: 64, border: "3px solid #fff" }}
+                  sx={{ width: 64, height: 64, border: "3px solid #d81b60" }}
                 />
-                <Typography color="#E2136E" variant="h6" fontWeight="bold">
+                <Typography variant="h6" fontWeight="bold">
                   {data?.name || "Agent"}
                 </Typography>
               </Grid>
 
-              {/* Balance Column */}
-              <Grid
-                item
-                xs={12}
-                sm={4} // 1/3 of the width on larger screens
-                textAlign={{ xs: "center", sm: "center" }}
-              >
+              {/* Center Column: Account Balance */}
+              <Grid item xs={12} sm={4} md={3} textAlign="center">
                 <Box
                   onClick={() => setBalanceVisible(!balanceVisible)}
                   sx={{
@@ -85,12 +83,10 @@ const AgentBalanceSection = () => {
                     transition: "0.3s",
                     userSelect: "none",
                     borderRadius: 2,
+                    fontSize: 20,
                     padding: "8px 14px",
                     backgroundColor: "#ffe6f0",
-                    backdropFilter: "blur(5px)",
                     display: "inline-block",
-                    color: "#E2136E",
-                    fontSize: 20,
                   }}
                 >
                   {balanceVisible
@@ -99,12 +95,8 @@ const AgentBalanceSection = () => {
                 </Box>
               </Grid>
 
-              {/* Status Column */}
-              <Grid
-                item
-                xs={12}
-                sm={4} // 1/3 of the width on larger screens
-              >
+              {/* Right Column: Active Status */}
+              <Grid item xs={12} sm={4} md={3} textAlign="center">
                 <Box
                   sx={{
                     mt: 1,
@@ -142,4 +134,4 @@ const AgentBalanceSection = () => {
   );
 };
 
-export default AgentBalanceSection;
+export default UserBalance;

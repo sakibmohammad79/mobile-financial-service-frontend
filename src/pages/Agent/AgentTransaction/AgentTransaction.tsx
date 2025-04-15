@@ -13,7 +13,7 @@ import {
   Button,
   Paper,
   CircularProgress,
-  Box,
+  Container,
 } from "@mui/material";
 import { useGetAgentTransactionQuery } from "../../../redux/api/transactionApi";
 import { useEffect, useState } from "react";
@@ -21,7 +21,7 @@ import { getuserInfo } from "../../../services/authService";
 
 const AgentTransaction = () => {
   const [agentId, setAgentId] = useState("");
-  const [visibleCount, setVisibleCount] = useState(5);
+  const [visibleCount, setVisibleCount] = useState(10);
 
   useEffect(() => {
     const userInfo = getuserInfo();
@@ -29,11 +29,9 @@ const AgentTransaction = () => {
       setAgentId(userInfo?.id);
     }
   }, [agentId]);
-  console.log(agentId);
 
   const { data: transactions, isLoading } =
     useGetAgentTransactionQuery(agentId);
-  console.log(transactions);
 
   // Handle loading state
   if (isLoading) {
@@ -49,11 +47,17 @@ const AgentTransaction = () => {
   }
 
   return (
-    <Box mb={12}>
+    <Container maxWidth="xl" sx={{ pb: 12 }}>
       <Grid item xs={12}>
         <Card sx={{ borderRadius: 3, boxShadow: 3 }}>
           <CardContent>
-            <Typography variant="h6" fontWeight="bold" mb={2}>
+            <Typography
+              textAlign={"center"}
+              variant="h6"
+              fontWeight="bold"
+              mb={2}
+              color="#E2136E"
+            >
               Recent Transactions
             </Typography>
 
@@ -115,7 +119,7 @@ const AgentTransaction = () => {
           </CardContent>
         </Card>
       </Grid>
-    </Box>
+    </Container>
   );
 };
 

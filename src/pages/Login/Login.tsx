@@ -13,8 +13,16 @@ import { login } from "../../services/actions/login";
 import { storeUserInfo } from "../../services/authService";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import React from "react";
+import MFSModal from "../../components/MFSModal/MFSModal";
 
 const Login = () => {
+    const [open, setOpen] = React.useState(false);
+  
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+   
   const navigate = useNavigate();
   const {
     register,
@@ -29,12 +37,8 @@ const Login = () => {
         storeUserInfo(res?.data?.token);
         toast.success(res?.message);
         reset();
-        if (res?.data?.account?.role === "user") {
+        if (res?.data?.account?._id) {
           navigate("/");
-        } else if (res?.data?.account?.role === "agent") {
-          navigate("/agent");
-        } else {
-          navigate("/admin");
         }
       } else {
         toast.error(res?.message);
@@ -98,6 +102,17 @@ const Login = () => {
               Login
             </Button>
           </form>
+          <Button
+  onClick={handleClickOpen}
+  variant="contained"
+  sx={{ mt: 2, background: "#E2136E" }}
+>
+  Demo Credentials
+</Button>
+
+{/* Render modal OUTSIDE the button */}
+<MFSModal open={open} setOpen={setOpen} />
+        
           <Box mt={2}>
             <Typography>
               New to financial service? Please{" "}
@@ -106,6 +121,7 @@ const Login = () => {
               </Link>
             </Typography>
           </Box>
+          
         </Box>
       </Container>
     </Box>

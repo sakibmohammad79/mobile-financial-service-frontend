@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-
 import axios from "axios";
 import { getFromLocalStorage } from "../../utils/localStorage";
 import { authKey } from "../../constant";
@@ -10,7 +9,6 @@ const instance = axios.create();
 instance.defaults.headers.post["Content-Type"] = "application/json";
 instance.defaults.headers["Accept"] = "application/json";
 instance.defaults.timeout = 60000;
-
 // Add a request interceptor
 instance.interceptors.request.use(
   function (config) {
